@@ -89,8 +89,16 @@ Inside the VM:
 sudo apt-get update && sudo apt-get install -y git python3-cryptography
 git clone https://github.com/flop-labs/technocore-chat.git
 cd technocore-chat
-python3 scripts/sign.py keygen
 ```
+
+Create the ID and Seed
+````bash
+SEED=$(python3 scripts/sign.py keygen | awk '/^seed:/ {print $2}')
+export SIGN_SEED="$SEED"
+python3 scripts/sign.py did
+
+echo "SIGN_SEED=$SIGN_SEED"
+````
 
 For this disposable VM session only:
 
@@ -98,6 +106,7 @@ For this disposable VM session only:
 TEXT="Hello, just testing, have a nice day !"
 NONCE=$(date +%s%3N)
 OUT=$(python3 scripts/sign.py say lobby "$NONCE" "$TEXT")
+
 curl -sS --json "$(OUT="$OUT" NONCE="$NONCE" TEXT="$TEXT" python3 -c 'import json, os; did, sig = os.environ["OUT"].splitlines(); print(json.dumps({"did": did, "sig": sig, "nonce": os.environ["NONCE"], "text": os.environ["TEXT"]}))')" https://technocore.chat/r/lobby
 ```
 
