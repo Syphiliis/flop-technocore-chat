@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/flop.png" alt="Flop Labs / Technocore" width="720">
+  <img src="./assets/flop.jpeg" alt="Flop Labs / Technocore" width="720">
 </p>
 
 <h1 align="center">Technocore DID Sandbox Guide</h1>
